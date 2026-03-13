@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Reviews — Primo's Barbershop</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;0,700;1,300;1,600&family=Syne:wght@400;500;700;800&family=Courier+Prime&display=swap" rel="stylesheet"/>
+<style>
+/* ═══════════════════════════════════════════════════
+   SHARED STYLES — Primo's Barbershop
+═══════════════════════════════════════════════════ */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;0,700;1,300;1,600&family=Syne:wght@400;500;700;800&family=Courier+Prime&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+
+:root {
+  --ink:         #0c0b09;
+  --ink2:        #0f0e0b;
+  --ink3:        #141310;
+  --cream:       #f0ebe0;
+  --cream2:      #e8e1d4;
+  --gold:        #c4922a;
+  --gold-bright: #e8b044;
+  --amber:       #9a6f2e;
+  --red:         #8b1a1a;
+  --muted:       #7a7060;
+  --border:      rgba(196,146,42,0.2);
+  --border-soft: rgba(196,146,42,0.08);
+  --max:         1360px;
+}
+
+body {
+  background: var(--ink);
+  color: var(--cream);
+  font-family: 'Syne', sans-serif;
+  font-weight: 400;
+  overflow-x: hidden;
+  line-height: 1;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  opacity: 0.028; pointer-events: none; z-index: 9000;
+}
+
+main { flex: 1; }
+
+/* ── SCROLL PROGRESS ── */
+#progress {
+  position: fixed; top: 0; left: 0; height: 2px;
+  background: linear-gradient(90deg, var(--gold), var(--gold-bright));
+  z-index: 9999; width: 0%;
+  transition: width 0.04s linear;
+}
+
+/* ══ NAV ══════════════════════════════════════════ */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 800;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 26px 64px;
+  background: linear-gradient(to bottom, rgba(12,11,9,0.97) 0%, rgba(12,11,9,0) 100%);
+  backdrop-filter: blur(3px);
+  border-bottom: 1px solid rgba(196,146,42,0.06);
+}
+.nav-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.15rem; font-weight: 700;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--cream); text-decoration: none; flex-shrink: 0;
+}
+.nav-logo span { color: var(--gold); }
+
+.nav-center {
+  display: flex; align-items: center; gap: 40px;
+  position: absolute; left: 50%; transform: translateX(-50%);
+}
+.nav-link {
+  font-size: 0.67rem; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--cream); text-decoration: none; opacity: 0.42;
+  transition: opacity 0.2s; position: relative; padding-bottom: 3px;
+}
+.nav-link::after {
+  content: ''; position: absolute; bottom: 0; left: 0;
+  width: 0; height: 1px; background: var(--gold);
+  transition: width 0.3s ease;
+}
+.nav-link:hover { opacity: 1; }
+.nav-link:hover::after { width: 100%; }
+.nav-link.active { opacity: 1; }
+.nav-link.active::after { width: 100%; }
+
+.nav-phone {
+  font-family: 'Courier Prime', monospace;
+  font-size: 0.78rem; letter-spacing: 0.06em;
+  color: var(--gold-bright); text-decoration: none;
+  border-bottom: 1px solid rgba(232,176,68,0.3);
+  padding-bottom: 2px; transition: all 0.2s;
+  flex-shrink: 0;
+}
+.nav-phone:hover { border-color: var(--gold-bright); color: #fff; }
+
+/* ══ PAGE HEADER (used on inner pages) ════════════ */
+.page-header {
+  padding: 160px 64px 96px;
+  position: relative; overflow: hidden;
+  border-bottom: 1px solid var(--border-soft);
+}
+.page-header-orb {
+  position: absolute; border-radius: 50%; filter: blur(140px);
+  pointer-events: none; opacity: 0.12;
+  width: 700px; height: 700px; background: var(--amber);
+  top: -200px; right: -200px;
+  animation: driftA 20s ease-in-out infinite alternate;
+}
+@keyframes driftA { from { transform: translate(0,0); } to { transform: translate(-60px,50px); } }
+
+.page-header-inner { max-width: var(--max); margin: 0 auto; position: relative; z-index: 2; }
+.page-eyebrow {
+  font-family: 'Courier Prime', monospace;
+  font-size: 0.66rem; letter-spacing: 0.32em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 22px;
+  display: flex; align-items: center; gap: 16px;
+  opacity: 0; animation: fadeUp 0.7s 0.1s ease forwards;
+}
+.page-eyebrow::before { content: ''; width: 30px; height: 1px; background: var(--gold); }
+.page-h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(3.5rem, 8vw, 7.5rem);
+  font-weight: 300; line-height: 0.92; letter-spacing: -0.02em;
+  opacity: 0; animation: fadeUp 0.9s 0.25s cubic-bezier(0.77,0,0.175,1) forwards;
+}
+.page-h1 em { font-style: italic; color: var(--gold); }
+.page-h1 strong { font-weight: 700; }
+.page-sub {
+  font-size: 0.9rem; color: var(--muted); line-height: 1.9;
+  max-width: 440px; margin-top: 28px;
+  opacity: 0; animation: fadeUp 0.7s 0.45s ease forwards;
+}
+@keyframes fadeUp { from { opacity:0; transform:translateY(22px); } to { opacity:1; transform:translateY(0); } }
+
+/* ══ SHARED LABELS & TITLES ═══════════════════════ */
+.s-label {
+  font-family: 'Courier Prime', monospace;
+  font-size: 0.63rem; letter-spacing: 0.32em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 20px;
+  display: flex; align-items: center; gap: 14px;
+}
+.s-label::before { content: ''; width: 22px; height: 1px; background: var(--gold); }
+.s-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.1rem, 4vw, 3.5rem);
+  font-weight: 300; line-height: 1.08;
+}
+.s-title em  { font-style: italic; font-weight: 600; color: var(--gold); }
+.s-title strong { font-weight: 700; }
+
+/* ══ REVEAL ════════════════════════════════════════ */
+.reveal {
+  opacity: 0; transform: translateY(30px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-scale {
+  opacity: 0; transform: scale(0.95);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.reveal-scale.visible { opacity: 1; transform: scale(1); }
+
+/* ══ MARQUEE ═══════════════════════════════════════ */
+.marquee-wrap {
+  overflow: hidden; border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border); padding: 14px 0;
+  background: rgba(196,146,42,0.03);
+}
+.marquee-track {
+  display: flex; width: max-content;
+  animation: marquee 28s linear infinite;
+}
+.marquee-track:hover { animation-play-state: paused; }
+.marquee-item {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.05rem; font-style: italic; font-weight: 300;
+  letter-spacing: 0.1em; color: var(--gold);
+  padding: 0 44px; white-space: nowrap;
+  display: flex; align-items: center; gap: 16px;
+}
+.marquee-item::after { content: '✦'; font-size: 0.5rem; color: var(--muted); }
+@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* ══ FOOTER ════════════════════════════════════════ */
+footer {
+  background: #080706;
+  border-top: 1px solid var(--border-soft);
+  padding: 80px 64px 36px;
+  margin-top: auto;
+}
+.footer-grid {
+  display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr;
+  gap: 60px; max-width: var(--max); margin: 0 auto;
+  padding-bottom: 52px; border-bottom: 1px solid var(--border-soft);
+}
+.f-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.55rem; font-weight: 700; color: var(--gold);
+  display: block; margin-bottom: 14px; letter-spacing: 0.04em;
+}
+.f-tagline { font-size: 0.82rem; color: var(--muted); line-height: 1.9; max-width: 240px; }
+.f-socials { display: flex; gap: 10px; margin-top: 24px; }
+.f-soc {
+  width: 38px; height: 38px; border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.66rem; font-weight: 700; letter-spacing: 0.04em;
+  color: var(--muted); text-decoration: none; transition: all 0.2s;
+}
+.f-soc:hover { border-color: var(--gold); color: var(--gold); }
+.f-col h4 {
+  font-size: 0.58rem; letter-spacing: 0.26em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 20px;
+}
+.f-col ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+.f-col a {
+  font-size: 0.84rem; color: var(--cream2); text-decoration: none;
+  opacity: 0.62; transition: all 0.2s;
+}
+.f-col a:hover { opacity: 1; color: var(--gold); }
+.footer-bottom {
+  display: flex; justify-content: space-between; align-items: center;
+  padding-top: 26px; font-size: 0.7rem; color: var(--muted);
+  max-width: var(--max); margin: 0 auto;
+  flex-wrap: wrap; gap: 8px;
+}
+.footer-bottom a { color: var(--gold); text-decoration: none; }
+.footer-bottom a:hover { text-decoration: underline; }
+
+/* ══ RESPONSIVE ════════════════════════════════════ */
+@media (max-width: 900px) {
+  nav { padding: 18px 24px; }
+  .nav-center { display: none; }
+  .page-header { padding: 120px 28px 72px; }
+  footer { padding: 60px 24px 28px; }
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 36px; }
+}
+@media (max-width: 540px) {
+  .footer-grid { grid-template-columns: 1fr; }
+}
+
+/* ══ SHARED SCRIPT — inline in each page ══════════ */
+
+</style>
+<style>
+/* ── REVIEWS SPECIFIC ────────────────────────── */
+
+/* RATING HERO STRIP */
+.rating-strip {
+  border-top:1px solid var(--border-soft);
+  border-bottom:1px solid var(--border-soft);
+  background:var(--ink2);
+  display:grid; grid-template-columns:1fr 1px 1fr 1px 1fr;
+  max-width:100%;
+}
+.rating-cell {
+  padding:60px 64px; text-align:center;
+  transition:background 0.2s;
+}
+.rating-cell:hover { background:var(--ink3); }
+.rating-divider { background:var(--border-soft); }
+.rc-num {
+  font-family:'Cormorant Garamond',serif;
+  font-size:4rem; font-weight:700; color:var(--gold); line-height:1;
+}
+.rc-stars { letter-spacing:4px; color:var(--gold); font-size:0.85rem; margin:8px 0 6px; }
+.rc-label { font-size:0.62rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--muted); }
+
+/* REVIEWS GRID */
+.reviews-body {
+  padding:96px 64px;
+  max-width:var(--max); margin:0 auto;
+}
+.reviews-header {
+  display:flex; align-items:flex-end; justify-content:space-between;
+  margin-bottom:60px; gap:32px;
+}
+.rv-grid {
+  display:grid; grid-template-columns:repeat(3,1fr);
+  gap:1px; background:var(--border-soft);
+  border:1px solid var(--border-soft);
+}
+.rv {
+  background:var(--ink); padding:40px 34px;
+  transition:background 0.25s; position:relative;
+}
+.rv:hover { background:var(--ink3); }
+.rv-stars { font-size:0.7rem; letter-spacing:4px; color:var(--gold); margin-bottom:20px; }
+.rv-text {
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.08rem; font-style:italic; font-weight:300;
+  color:var(--cream2); line-height:1.82; margin-bottom:26px;
+}
+.rv-author { font-size:0.6rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--muted); display:flex; align-items:center; gap:9px; }
+.rv-author::before { content:'—'; color:var(--gold); }
+.rv-source { font-size:0.55rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--muted); opacity:0.5; margin-top:4px; }
+
+/* FEATURED PULL QUOTE */
+.featured-quote {
+  background:var(--ink2);
+  border-top:1px solid var(--border-soft);
+  border-bottom:1px solid var(--border-soft);
+  padding:80px 64px;
+  text-align:center;
+  position:relative; overflow:hidden;
+}
+.featured-quote::before {
+  content:'"';
+  position:absolute; top:-40px; left:50%; transform:translateX(-50%);
+  font-family:'Cormorant Garamond',serif;
+  font-size:28rem; font-weight:700; color:rgba(196,146,42,0.03);
+  line-height:1; pointer-events:none;
+}
+.fq-text {
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(1.6rem,3vw,2.5rem); font-style:italic; font-weight:300;
+  color:var(--cream); line-height:1.5;
+  max-width:780px; margin:0 auto 28px;
+  position:relative; z-index:1;
+}
+.fq-author {
+  font-size:0.65rem; letter-spacing:0.25em; text-transform:uppercase; color:var(--gold);
+  display:flex; align-items:center; justify-content:center; gap:16px;
+}
+.fq-author::before,.fq-author::after { content:''; width:40px; height:1px; background:var(--gold); }
+
+/* PLATFORM LINKS */
+.platforms {
+  padding:80px 64px; background:var(--ink);
+  border-top:1px solid var(--border-soft);
+}
+.platforms-inner { max-width:var(--max); margin:0 auto; }
+.platform-row {
+  display:flex; align-items:center; justify-content:space-between;
+  padding:24px 0; border-bottom:1px solid var(--border-soft);
+  transition:all 0.2s;
+}
+.platform-row:first-child { border-top:1px solid var(--border-soft); }
+.platform-row:hover .plat-name { color:var(--gold); }
+.platform-row:hover .plat-arrow { transform:translate(3px,-3px); color:var(--gold); }
+.plat-left { display:flex; align-items:center; gap:20px; }
+.plat-icon { width:48px; height:48px; border:1px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:0.72rem; font-weight:700; color:var(--muted); transition:all 0.2s; }
+.plat-name { font-family:'Cormorant Garamond',serif; font-size:1.2rem; font-weight:600; transition:color 0.2s; }
+.plat-desc { font-size:0.78rem; color:var(--muted); margin-top:2px; }
+.plat-stars { color:var(--gold); letter-spacing:3px; font-size:0.75rem; }
+.plat-link { font-size:0.68rem; letter-spacing:0.16em; text-transform:uppercase; color:var(--gold); text-decoration:none; border-bottom:1px solid var(--border); padding-bottom:3px; transition:all 0.2s; }
+.plat-link:hover { border-color:var(--gold-bright); color:var(--gold-bright); }
+.plat-arrow { font-size:0.88rem; color:var(--muted); transition:all 0.25s; }
+
+/* LEAVE REVIEW CTA */
+.review-cta {
+  background:var(--gold); padding:80px 64px;
+  display:flex; align-items:center; justify-content:space-between; gap:40px;
+}
+.review-cta h2 { font-family:'Cormorant Garamond',serif; font-size:clamp(1.8rem,3.5vw,3rem); font-weight:300; color:var(--ink); line-height:1.1; }
+.review-cta h2 em { font-style:italic; font-weight:700; }
+.btn-dark { background:var(--ink); color:var(--cream); padding:16px 32px; font-size:0.78rem; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; text-decoration:none; border-radius:1px; transition:background 0.2s; white-space:nowrap; }
+.btn-dark:hover { background:#222; }
+
+@media(max-width:960px){
+  .rating-strip { grid-template-columns:1fr; }
+  .rating-divider { display:none; }
+  .reviews-body { padding:72px 28px; }
+  .reviews-header { flex-direction:column; align-items:flex-start; gap:24px; }
+  .rv-grid { grid-template-columns:1fr; }
+  .featured-quote { padding:60px 28px; }
+  .platforms { padding:64px 28px; }
+  .review-cta { flex-direction:column; padding:60px 28px; }
+}
+</style>
+</head>
+<body>
+<div id="progress"></div>
+
+<nav>
+  <a class="nav-logo" href="index.html">Primo's <span>Barbershop</span></a>
+  <div class="nav-center">
+    <a class="nav-link" href="index.html">Home</a>
+    <a class="nav-link" href="about.html">About</a>
+    <a class="nav-link" href="services.html">Services</a>
+    <a class="nav-link" href="hours.html">Hours</a>
+    <a class="nav-link active" href="reviews.html">Reviews</a>
+  </div>
+  <a class="nav-phone" href="tel:2033544442">(203) 354-4442</a>
+</nav>
+
+<main>
+
+<div class="page-header">
+  <div class="page-header-orb"></div>
+  <div class="page-header-inner">
+    <p class="page-eyebrow">What Clients Say</p>
+    <h1 class="page-h1"><em>Trusted</em><br>by Norwalk.</h1>
+    <p class="page-sub">146+ five-star reviews and counting — built over 15 years of consistent, quality work and genuine community care.</p>
+  </div>
+</div>
+
+<!-- RATING STRIP -->
+<div class="rating-strip">
+  <div class="rating-cell reveal"><div class="rc-num" data-count-float="4.8">4.8</div><div class="rc-stars">★★★★★</div><div class="rc-label">Google Rating</div></div>
+  <div class="rating-divider"></div>
+  <div class="rating-cell reveal" style="transition-delay:.08s"><div class="rc-num" data-count="146">0+</div><div class="rc-stars" style="opacity:0;">★★★★★</div><div class="rc-label">Total Reviews</div></div>
+  <div class="rating-divider"></div>
+  <div class="rating-cell reveal" style="transition-delay:.16s"><div class="rc-num" data-count="15">0+</div><div class="rc-stars" style="opacity:0;">★★★★★</div><div class="rc-label">Years Serving Norwalk</div></div>
+</div>
+
+<!-- FEATURED PULL QUOTE -->
+<div class="featured-quote">
+  <div class="reveal">
+    <p class="fq-text">"There is nowhere else in Norwalk CT to get an attentive professional cut, while listening to great music, in a comfortable friendly atmosphere. Love my neighborhood barber."</p>
+    <div class="fq-author">Loyal Norwalk Client</div>
+  </div>
+</div>
+
+<!-- REVIEWS GRID -->
+<div style="background:var(--ink);">
+  <div class="reviews-body">
+    <div class="reviews-header reveal">
+      <div>
+        <p class="s-label">Client Reviews</p>
+        <h2 class="s-title">What They're <em>Saying</em></h2>
+      </div>
+      <a href="https://maps.google.com/?q=Primo%27s+Barbershop+Norwalk+CT" target="_blank" style="font-size:0.72rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);text-decoration:none;border-bottom:1px solid var(--border);padding-bottom:3px;white-space:nowrap;transition:all 0.2s;" onmouseover="this.style.borderColor='var(--gold-bright)';this.style.color='var(--gold-bright)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--gold)'">View on Google ↗</a>
+    </div>
+    <div class="rv-grid">
+      <div class="rv reveal" style="transition-delay:.04s"><div class="rv-stars">★★★★★</div><p class="rv-text">"Best barbershop in Norwalk. All the barbers are professional and talented — willing to accommodate and skilled enough to do whatever style you want. Been coming for 5 years and never once been disappointed."</p><div class="rv-author">Google Reviewer</div><div class="rv-source">Via Google Maps</div></div>
+      <div class="rv reveal" style="transition-delay:.08s"><div class="rv-stars">★★★★★</div><p class="rv-text">"Visiting from out of town, took a chance on a local spot. Jean Carlo cut my hair and it was honestly one of the best haircuts I've had in a long while. Welcoming, professional, and skilled."</p><div class="rv-author">Out-of-Town Visitor</div><div class="rv-source">Via Google Maps</div></div>
+      <div class="rv reveal" style="transition-delay:.12s"><div class="rv-stars">★★★★★</div><p class="rv-text">"Ivan is unreal with kids. Been taking my son to him for years. Everyone is so welcoming and genuinely funny. This place has our whole family as loyal customers for life."</p><div class="rv-author">Loyal Customer</div><div class="rv-source">Via Google Maps</div></div>
+      <div class="rv reveal" style="transition-delay:.16s"><div class="rv-stars">★★★★★</div><p class="rv-text">"There's nowhere else in Norwalk to get an attentive, professional cut while listening to great music in a genuinely comfortable atmosphere. Love my neighborhood barber."</p><div class="rv-author">Norwalk Local</div><div class="rv-source">Via Google Maps</div></div>
+      <div class="rv reveal" style="transition-delay:.2s"><div class="rv-stars">★★★★★</div><p class="rv-text">"Professional, funny, and chill. This place welcomes all genders and races — prices are reasonable, and whatever style you want, they'll absolutely nail it every single time."</p><div class="rv-author">Regular Client</div><div class="rv-source">Via Google Maps</div></div>
+      <div class="rv reveal" style="transition-delay:.24s"><div class="rv-stars">★★★★★</div><p class="rv-text">"Primos was an awesome experience — barbers are very welcoming, all have significant experience, and the environment is clean and inviting. Couldn't recommend this place more."</p><div class="rv-author">Google Reviewer</div><div class="rv-source">Via Google Maps</div></div>
+      <div class="rv reveal" style="transition-delay:.28s"><div class="rv-stars">★★★★★</div><p class="rv-text">"The barbers are really professional — funny, nice, cool and chill. This is the place for all genders and races. Prices are reasonable and any style you want, they'll nail it."</p><div class="rv-author">Satisfied Client</div><div class="rv-source">Via Google Maps</div></div>
+      <div class="rv reveal" style="transition-delay:.32s"><div class="rv-stars">★★★★★</div><p class="rv-text">"Been coming here for years and never had a bad experience. The shop has great vibes, the barbers are talented and friendly, and they always get it right."</p><div class="rv-author">Regular</div><div class="rv-source">Via Google Maps</div></div>
+      <div class="rv reveal" style="transition-delay:.36s"><div class="rv-stars">★★★★★</div><p class="rv-text">"Primo's is the real deal. Great cuts, great people, great atmosphere. If you live in Norwalk or are passing through, do yourself a favor and stop in."</p><div class="rv-author">Norwalk Resident</div><div class="rv-source">Via Google Maps</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- PLATFORMS -->
+<div class="platforms">
+  <div class="platforms-inner">
+    <div class="reveal">
+      <p class="s-label">Find Us Online</p>
+      <h2 class="s-title">Review <em>Platforms</em></h2>
+    </div>
+    <div class="platform-row reveal" style="transition-delay:.05s;cursor:default;">
+      <div class="plat-left">
+        <div class="plat-icon">G</div>
+        <div>
+          <div class="plat-name">Google Maps</div>
+          <div class="plat-desc">146+ reviews · Primary platform</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:24px;">
+        <div class="plat-stars">★★★★★</div>
+        <a class="plat-link" href="https://maps.google.com/?q=Primo%27s+Barbershop+Norwalk+CT" target="_blank">Leave a Review ↗</a>
+      </div>
+    </div>
+    <div class="platform-row reveal" style="transition-delay:.1s;cursor:default;">
+      <div class="plat-left">
+        <div class="plat-icon">IG</div>
+        <div>
+          <div class="plat-name">Instagram</div>
+          <div class="plat-desc">@primobarbershop · Follow for updates</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:24px;">
+        <a class="plat-link" href="https://instagram.com/primobarbershop" target="_blank">Follow ↗</a>
+      </div>
+    </div>
+    <div class="platform-row reveal" style="transition-delay:.15s;cursor:default;">
+      <div class="plat-left">
+        <div class="plat-icon">FB</div>
+        <div>
+          <div class="plat-name">Facebook</div>
+          <div class="plat-desc">Primo's Barbershop · Stay connected</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:24px;">
+        <a class="plat-link" href="https://facebook.com/p/Primos-Barbershop-100057373879259" target="_blank">Visit Page ↗</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- LEAVE REVIEW CTA -->
+<div class="review-cta">
+  <h2>Had a great cut?<br><em>Leave a review.</em></h2>
+  <a class="btn-dark" href="https://maps.google.com/?q=Primo%27s+Barbershop+Norwalk+CT" target="_blank">Review on Google ↗</a>
+</div>
+
+</main>
+
+<footer>
+  <div class="footer-grid">
+    <div>
+      <span class="f-logo">Primo's Barbershop</span>
+      <p class="f-tagline">A community barbershop serving Norwalk, CT since 2009. You're more than a customer — you're family.</p>
+      <div class="f-socials">
+        <a class="f-soc" href="https://instagram.com/primobarbershop" target="_blank">IG</a>
+        <a class="f-soc" href="https://facebook.com/p/Primos-Barbershop-100057373879259" target="_blank">FB</a>
+        <a class="f-soc" href="tel:2033544442">☎</a>
+      </div>
+    </div>
+    <div class="f-col"><h4>Pages</h4><ul><li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li><li><a href="services.html">Services</a></li><li><a href="hours.html">Hours &amp; Contact</a></li><li><a href="reviews.html">Reviews</a></li></ul></div>
+    <div class="f-col"><h4>Contact</h4><ul><li><a href="tel:2033544442">(203) 354-4442</a></li><li><a href="https://maps.google.com/?q=34+Wall+St+Norwalk+CT" target="_blank">34 Wall St, Norwalk CT</a></li><li><a href="https://instagram.com/primobarbershop" target="_blank">@primobarbershop</a></li></ul></div>
+    <div class="f-col"><h4>Hours</h4><ul><li><a href="hours.html">Mon–Sat: 9AM–8PM</a></li><li><a href="hours.html">Sunday: 9AM–5PM</a></li><li><a href="hours.html">Walk-ins welcome</a></li></ul></div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Primo's Barbershop · Norwalk, CT</span>
+    <span>Website by <a href="#">Launch Local</a></span>
+  </div>
+</footer>
+<script>
+/* ═══════════════════════════════════════════════════
+   SHARED JS — Primo's Barbershop
+═══════════════════════════════════════════════════ */
+
+/* ── SCROLL PROGRESS ──────────────────────────── */
+const bar = document.getElementById('progress');
+if (bar) {
+  window.addEventListener('scroll', () => {
+    const pct = window.scrollY / (document.body.scrollHeight - window.innerHeight) * 100;
+    bar.style.width = pct + '%';
+  }, { passive: true });
+}
+
+/* ── REVEAL ON SCROLL ─────────────────────────── */
+const revealObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      revealObs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.08, rootMargin: '0px 0px -28px 0px' });
+
+document.querySelectorAll('.reveal, .reveal-scale').forEach(el => revealObs.observe(el));
+
+/* ── COUNT-UP ─────────────────────────────────── */
+const countObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (!e.isIntersecting) return;
+    const el = e.target;
+    const target = parseInt(el.dataset.count);
+    if (!target) return;
+    let current = 0;
+    const step = Math.max(1, Math.ceil(target / 65));
+    const timer = setInterval(() => {
+      current = Math.min(current + step, target);
+      el.textContent = current + '+';
+      if (current >= target) clearInterval(timer);
+    }, 20);
+    countObs.unobserve(el);
+  });
+}, { threshold: 0.5 });
+
+document.querySelectorAll('[data-count]').forEach(el => countObs.observe(el));
+
+/* ── TODAY HIGHLIGHT ──────────────────────────── */
+(function() {
+  const dayNames = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  const today = dayNames[new Date().getDay()];
+  document.querySelectorAll('.h-row').forEach(row => {
+    const dayEl = row.querySelector('.h-day');
+    if (!dayEl) return;
+    if (dayEl.textContent.trim() === today) {
+      row.classList.add('today');
+      dayEl.textContent = today + ' — Today';
+    }
+  });
+})();
+
+/* ── NAV SCROLL SHADOW ────────────────────────── */
+const nav = document.querySelector('nav');
+if (nav) {
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 40) {
+      nav.style.background = 'rgba(12,11,9,0.97)';
+      nav.style.borderBottom = '1px solid rgba(196,146,42,0.1)';
+    } else {
+      nav.style.background = '';
+      nav.style.borderBottom = '1px solid rgba(196,146,42,0.06)';
+    }
+  }, { passive: true });
+}
+
+/* ── PAGE TRANSITION ──────────────────────────── */
+document.querySelectorAll('a[href]').forEach(link => {
+  const href = link.getAttribute('href');
+  if (!href || href.startsWith('#') || href.startsWith('tel:') || href.startsWith('mailto:') || href.startsWith('http')) return;
+  link.addEventListener('click', e => {
+    e.preventDefault();
+    document.body.style.opacity = '0';
+    document.body.style.transition = 'opacity 0.22s ease';
+    setTimeout(() => { window.location.href = href; }, 220);
+  });
+});
+
+/* ── FADE IN ON LOAD ──────────────────────────── */
+document.body.style.opacity = '0';
+document.body.style.transition = 'opacity 0.3s ease';
+window.addEventListener('load', () => {
+  document.body.style.opacity = '1';
+});
+
+</script>
+</body>
+</html>
