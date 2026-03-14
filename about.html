@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>About — Primo's Barbershop</title>
+<title>Services — Primo's Barbershop</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;0,700;1,300;1,600&family=Syne:wght@400;500;700;800&family=Courier+Prime&display=swap" rel="stylesheet"/>
@@ -258,132 +258,100 @@ footer {
 
 </style>
 <style>
-/* ── ABOUT-SPECIFIC ──────────────────────────── */
-.about-body-text { font-size:0.92rem; color:var(--muted); line-height:1.95; max-width:520px; }
-.pull-quote {
-  font-family:'Cormorant Garamond',serif;
-  font-size:1.7rem; font-style:italic; font-weight:300;
-  color:var(--cream2); line-height:1.5;
-  border-left:2px solid var(--gold); padding-left:26px;
-  margin:40px 0;
-}
-
-/* ── STORY SECTION ── */
-.story {
-  padding:100px 64px;
+/* ── SERVICES SPECIFIC ───────────────────────── */
+.services-body {
   max-width:var(--max); margin:0 auto;
-  display:grid; grid-template-columns:1fr 1fr; gap:96px; align-items:start;
+  padding:96px 64px;
+  position:relative;
 }
-.story-visual {
-  position:sticky; top:120px;
-  display:flex; flex-direction:column; gap:16px;
-}
-.story-img {
-  width:100%; aspect-ratio:4/5;
-  background:var(--ink2); border:1px solid var(--border-soft);
-  display:flex; align-items:center; justify-content:center;
-  flex-direction:column; gap:14px; position:relative; overflow:hidden;
-}
-.story-img::before { content:''; position:absolute; inset:0; background:linear-gradient(135deg,rgba(196,146,42,0.07) 0%,transparent 55%); }
-.story-img::after  { content:'✂'; position:absolute; font-size:10rem; opacity:0.04; bottom:-30px; right:-20px; transform:rotate(-45deg); }
-.story-img-icon  { font-size:3rem; opacity:0.1; z-index:1; }
-.story-img-label { font-size:0.6rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--muted); z-index:1; }
-.story-img-caption {
-  font-family:'Courier Prime',monospace;
-  font-size:0.65rem; letter-spacing:0.14em; text-transform:uppercase;
-  color:var(--muted); text-align:center;
-  border:1px solid var(--border-soft); padding:12px 16px;
-}
-
-/* ── CONTENT BLOCKS ── */
-.story-content { display:flex; flex-direction:column; gap:0; }
-.story-section { padding:40px 0; border-bottom:1px solid var(--border-soft); }
-.story-section:first-child { padding-top:0; }
-.story-section:last-child { border-bottom:none; }
-.story-section h3 {
+.services-body::before {
+  content:'CUTS';
+  position:absolute; right:-40px; top:50%;
+  transform:translateY(-50%) rotate(90deg);
   font-family:'Cormorant Garamond',serif;
-  font-size:1.6rem; font-weight:600; margin-bottom:16px; line-height:1.2;
+  font-size:20vw; font-weight:700;
+  color:rgba(196,146,42,0.022); letter-spacing:-0.04em;
+  white-space:nowrap; line-height:1; pointer-events:none;
 }
-.story-section h3 em { font-style:italic; color:var(--gold); }
 
-/* ── STATS BAND ── */
-.stats-band {
-  background:var(--ink2); border-top:1px solid var(--border-soft); border-bottom:1px solid var(--border-soft);
-  display:grid; grid-template-columns:repeat(4,1fr);
-  gap:1px; background-color:var(--border-soft);
-  border:1px solid var(--border-soft);
+/* ── MAIN SERVICES GRID ── */
+.services-grid {
+  display:grid; grid-template-columns:repeat(3,1fr);
+  gap:1px; background:rgba(196,146,42,0.12);
+  border:1px solid rgba(196,146,42,0.12);
+  position:relative; z-index:1;
 }
-.stat-cell {
-  background:var(--ink2); padding:52px 44px; text-align:center;
-  transition:background 0.2s;
+.svc {
+  background:var(--ink2); padding:56px 44px;
+  position:relative; overflow:hidden;
+  transition:background 0.25s;
 }
-.stat-cell:hover { background:var(--ink3); }
-.stat-n {
-  font-family:'Cormorant Garamond',serif;
-  font-size:3rem; font-weight:700; color:var(--gold); line-height:1;
-}
-.stat-l { font-size:0.62rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--muted); margin-top:8px; }
-
-/* ── TEAM ── */
-.team { padding:100px 64px; background:var(--ink); }
-.team-inner { max-width:var(--max); margin:0 auto; }
-.team-header { margin-bottom:64px; }
-.team-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--border-soft); border:1px solid var(--border-soft); }
-.barber-card {
-  background:var(--ink); padding:48px 40px;
-  transition:background 0.25s; position:relative; overflow:hidden;
-}
-.barber-card::before {
+.svc::before {
   content:''; position:absolute; inset:0;
-  background:linear-gradient(135deg,rgba(196,146,42,0.05) 0%,transparent 55%);
+  background:linear-gradient(140deg,rgba(196,146,42,0.07) 0%,transparent 55%);
   opacity:0; transition:opacity 0.3s;
 }
-.barber-card:hover { background:var(--ink3); }
-.barber-card:hover::before { opacity:1; }
-.barber-avatar {
-  width:72px; height:72px; border-radius:50%;
-  border:1px solid var(--border); background:var(--ink2);
-  display:flex; align-items:center; justify-content:center;
-  font-size:1.5rem; opacity:0.4; margin-bottom:24px;
+.svc:hover { background:var(--ink3); }
+.svc:hover::before { opacity:1; }
+.svc:hover .svc-num { color:var(--gold); opacity:1; }
+.svc:hover .svc-arrow { transform:translate(3px,-3px); color:var(--gold); }
+.svc-num {
+  font-family:'Courier Prime',monospace;
+  font-size:0.6rem; letter-spacing:0.22em; color:var(--muted); opacity:0.5;
+  margin-bottom:28px; transition:all 0.25s;
 }
-.barber-card-name {
+.svc-name {
   font-family:'Cormorant Garamond',serif;
-  font-size:1.7rem; font-weight:700; margin-bottom:6px;
+  font-size:1.65rem; font-weight:600; margin-bottom:14px; line-height:1.15;
 }
-.barber-card-role {
-  font-size:0.64rem; letter-spacing:0.18em; text-transform:uppercase;
-  color:var(--gold); margin-bottom:20px;
-}
-.barber-card-bio { font-size:0.84rem; color:var(--muted); line-height:1.85; }
-.barber-specialty {
-  margin-top:24px; display:flex; flex-wrap:wrap; gap:8px;
-}
-.spec-tag {
-  font-size:0.58rem; letter-spacing:0.14em; text-transform:uppercase;
-  color:var(--muted); border:1px solid var(--border-soft);
-  padding:4px 12px; border-radius:100px;
-}
+.svc-desc { font-size:0.84rem; color:var(--muted); line-height:1.88; }
+.svc-foot { display:flex; align-items:center; justify-content:space-between; margin-top:28px; }
+.svc-tag { font-size:0.58rem; letter-spacing:0.16em; text-transform:uppercase; color:var(--gold); border:1px solid var(--border); padding:5px 14px; border-radius:100px; }
+.svc-arrow { font-size:0.88rem; color:var(--muted); transition:all 0.25s; }
 
-/* ── VALUES ── */
-.values { padding:100px 64px; background:var(--ink2); }
-.values-inner { max-width:var(--max); margin:0 auto; }
-.values-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--border-soft); border:1px solid var(--border-soft); margin-top:56px; }
-.value-card {
-  background:var(--ink2); padding:44px 36px; transition:background 0.2s;
+/* ── ADD-ONS ── */
+.addons { padding:0 64px 96px; }
+.addons-inner { max-width:var(--max); margin:0 auto; }
+.addons-header { padding-bottom:40px; border-bottom:1px solid var(--border-soft); margin-bottom:0; }
+.addon-row { display:flex; align-items:center; justify-content:space-between; padding:20px 0; border-bottom:1px solid var(--border-soft); transition:all 0.2s; }
+.addon-row:hover .addon-name { color:var(--gold); }
+.addon-name { font-family:'Cormorant Garamond',serif; font-size:1.15rem; font-weight:600; transition:color 0.2s; }
+.addon-desc { font-size:0.8rem; color:var(--muted); max-width:320px; line-height:1.6; }
+.addon-tag { font-size:0.58rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--muted); border:1px solid var(--border-soft); padding:4px 12px; border-radius:100px; }
+
+/* ── AMENITIES ── */
+.amenities { background:var(--ink); padding:80px 64px; border-top:1px solid var(--border-soft); }
+.amenities-inner { max-width:var(--max); margin:0 auto; }
+.amenities-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--border-soft); border:1px solid var(--border-soft); margin-top:52px; }
+.amen-cell { background:var(--ink); padding:36px 28px; transition:background 0.2s; }
+.amen-cell:hover { background:var(--ink3); }
+.amen-icon { font-size:1.4rem; margin-bottom:14px; opacity:0.55; }
+.amen-title { font-family:'Cormorant Garamond',serif; font-size:1.05rem; font-weight:600; margin-bottom:8px; }
+.amen-desc { font-size:0.78rem; color:var(--muted); line-height:1.7; }
+
+/* ── BOOKING FOOTER ── */
+.book-footer {
+  background:var(--gold); padding:80px 64px;
+  display:flex; align-items:center; justify-content:space-between; gap:40px;
 }
-.value-card:hover { background:var(--ink3); }
-.value-num { font-family:'Courier Prime',monospace; font-size:0.6rem; letter-spacing:0.22em; color:var(--muted); opacity:0.5; margin-bottom:20px; }
-.value-title { font-family:'Cormorant Garamond',serif; font-size:1.35rem; font-weight:600; margin-bottom:12px; }
-.value-desc { font-size:0.83rem; color:var(--muted); line-height:1.85; }
+.book-footer h2 { font-family:'Cormorant Garamond',serif; font-size:clamp(1.8rem,3.5vw,3rem); font-weight:300; color:var(--ink); line-height:1.1; }
+.book-footer h2 em { font-style:italic; font-weight:700; }
+.book-actions { display:flex; gap:16px; flex-shrink:0; flex-wrap:wrap; }
+.btn-dark { background:var(--ink); color:var(--cream); padding:16px 32px; font-size:0.78rem; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; text-decoration:none; border-radius:1px; transition:background 0.2s; white-space:nowrap; }
+.btn-dark:hover { background:#222; }
+.btn-outline-dark { border:2px solid var(--ink); color:var(--ink); padding:14px 32px; font-size:0.78rem; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; text-decoration:none; border-radius:1px; transition:all 0.2s; white-space:nowrap; }
+.btn-outline-dark:hover { background:var(--ink); color:var(--gold); }
 
 @media(max-width:960px){
-  .story { grid-template-columns:1fr; padding:72px 28px; gap:48px; }
-  .story-visual { position:static; }
-  .stats-band { grid-template-columns:1fr 1fr; }
-  .team { padding:72px 28px; }
-  .team-grid { grid-template-columns:1fr; }
-  .values { padding:72px 28px; }
-  .values-grid { grid-template-columns:1fr; }
+  .services-body { padding:72px 28px; }
+  .services-grid { grid-template-columns:1fr; }
+  .addons { padding:0 28px 72px; }
+  .amenities { padding:72px 28px; }
+  .amenities-grid { grid-template-columns:1fr 1fr; }
+  .book-footer { flex-direction:column; padding:60px 28px; }
+}
+@media(max-width:560px){
+  .amenities-grid { grid-template-columns:1fr; }
 }
 </style>
 </head>
@@ -394,8 +362,8 @@ footer {
   <a class="nav-logo" href="index.html">Primo's <span>Barbershop</span></a>
   <div class="nav-center">
     <a class="nav-link" href="index.html">Home</a>
-    <a class="nav-link active" href="about.html">About</a>
-    <a class="nav-link" href="services.html">Services</a>
+    <a class="nav-link" href="about.html">About</a>
+    <a class="nav-link active" href="services.html">Services</a>
     <a class="nav-link" href="hours.html">Hours</a>
     <a class="nav-link" href="reviews.html">Reviews</a>
   </div>
@@ -406,8 +374,8 @@ footer {
 <!-- MOBILE MENU OVERLAY -->
 <div class="mobile-menu">
   <a class="mobile-menu-link " href="index.html">Home</a>
-  <a class="mobile-menu-link active" href="about.html">About</a>
-  <a class="mobile-menu-link " href="services.html">Services</a>
+  <a class="mobile-menu-link " href="about.html">About</a>
+  <a class="mobile-menu-link active" href="services.html">Services</a>
   <a class="mobile-menu-link " href="hours.html">Hours</a>
   <a class="mobile-menu-link " href="reviews.html">Reviews</a>
   <a class="mobile-menu-phone" href="tel:2033544442">(203) 354-4442</a>
@@ -415,126 +383,98 @@ footer {
 
 <main>
 
-<!-- PAGE HEADER -->
-<div class="page-header">
+<div class="page-header" style="background:var(--ink2);">
   <div class="page-header-orb"></div>
   <div class="page-header-inner">
-    <p class="page-eyebrow">Our Story</p>
-    <h1 class="page-h1">More than<br>a cut.<br><em>A community.</em></h1>
-    <p class="page-sub">Since 2009, Primo's has been a cornerstone of Norwalk — where every client is treated like family and every cut is treated like craft.</p>
+    <p class="page-eyebrow">What We Offer</p>
+    <h1 class="page-h1">Our <em>Services</em></h1>
+    <p class="page-sub">Walk-ins always welcome. Call or text (203) 354-4442 to request your preferred barber.</p>
   </div>
 </div>
 
-<!-- STATS BAND -->
-<div class="stats-band">
-  <div class="stat-cell reveal"><div class="stat-n" data-count="15">0+</div><div class="stat-l">Years in Business</div></div>
-  <div class="stat-cell reveal" style="transition-delay:.08s"><div class="stat-n" data-count="146">0+</div><div class="stat-l">Google Reviews</div></div>
-  <div class="stat-cell reveal" style="transition-delay:.16s"><div class="stat-n">4.8★</div><div class="stat-l">Average Rating</div></div>
-  <div class="stat-cell reveal" style="transition-delay:.24s"><div class="stat-n">7</div><div class="stat-l">Days a Week</div></div>
-</div>
-
-<!-- STORY -->
-<section style="background:var(--ink);">
-  <div class="story">
-    <div class="story-visual">
-      <div class="story-img reveal-scale">
-        <div class="story-img-icon">✂</div>
-        <span class="story-img-label">Add your shop photo here</span>
+<div style="background:var(--ink2);">
+  <div class="services-body">
+    <div class="services-grid">
+      <div class="svc reveal" style="transition-delay:.04s">
+        <div class="svc-num">01 — Haircut</div>
+        <div class="svc-name">Classic Cut</div>
+        <p class="svc-desc">A precise, tailored cut built around your specific face shape and style preference. Any length, any texture — handled with expert technique and full attention. Whether you have a reference photo or just a general idea, we'll make it work.</p>
+        <div class="svc-foot"><span class="svc-tag">All Hair Types</span><span class="svc-arrow">↗</span></div>
       </div>
-      <div class="story-img-caption reveal">34 Wall St, Norwalk, CT · Est. 2009</div>
-    </div>
-    <div class="story-content">
-      <div class="story-section reveal">
-        <h3>Where It <em>Started</em></h3>
-        <p class="about-body-text">Primo's Barbershop opened its doors in 2009 on Wall Street in downtown Norwalk. What began as a small shop with five dedicated barbers quickly became a go-to grooming destination for the entire community — built on skill, consistency, and a genuine love for the craft.</p>
+      <div class="svc reveal" style="transition-delay:.08s">
+        <div class="svc-num">02 — Fade</div>
+        <div class="svc-name">Precision Fade</div>
+        <p class="svc-desc">High, mid, or low — our barbers execute crisp gradient transitions with sharp edging and clean intentional lines from top to bottom. The signature service at Primo's, perfected over 15 years of daily practice.</p>
+        <div class="svc-foot"><span class="svc-tag">Signature Style</span><span class="svc-arrow">↗</span></div>
       </div>
-      <div class="story-section reveal" style="transition-delay:.1s">
-        <blockquote class="pull-quote">
-          "You're more than just a customer — you're family."
-        </blockquote>
-        <p class="about-body-text">That wasn't a slogan — it was the standard from day one. Every barber at Primo's is committed to making every client feel genuinely welcome, cared for, and confident when they leave the chair.</p>
+      <div class="svc reveal" style="transition-delay:.12s">
+        <div class="svc-num">03 — Beard</div>
+        <div class="svc-name">Beard Trim</div>
+        <p class="svc-desc">Shape, define, and line up your beard for a clean, polished, intentional look. We tighten the edges, clean the neckline, and nail whatever silhouette you're going for — from a tight taper to a full, shaped beard.</p>
+        <div class="svc-foot"><span class="svc-tag">Grooming</span><span class="svc-arrow">↗</span></div>
       </div>
-      <div class="story-section reveal" style="transition-delay:.2s">
-        <h3>The <em>Craft</em></h3>
-        <p class="about-body-text">From precision fades and clean line-ups to beard shaping and scissors work, every service is performed with the kind of attention that only comes from years of hands-on experience. No rushed cuts. No shortcuts. Just consistent, high-quality work — every single visit.</p>
+      <div class="svc reveal" style="transition-delay:.16s">
+        <div class="svc-num">04 — Kids</div>
+        <div class="svc-name">Kids' Cut</div>
+        <p class="svc-desc">Patient, calm, and experienced with all ages — from toddlers to teenagers. We understand that kids need a different approach, and our barbers have the experience and personality to make the chair a comfortable, even fun experience.</p>
+        <div class="svc-foot"><span class="svc-tag">All Ages</span><span class="svc-arrow">↗</span></div>
       </div>
-      <div class="story-section reveal" style="transition-delay:.28s">
-        <h3>The <em>Community</em></h3>
-        <p class="about-body-text">Over 15 years in, Primo's has become part of the fabric of Norwalk. Fathers bring sons. Regulars come every two weeks. Visitors from out of town find it by reputation and leave as fans. 146+ five-star Google reviews tell the story better than we ever could.</p>
+      <div class="svc reveal" style="transition-delay:.2s">
+        <div class="svc-num">05 — Custom</div>
+        <div class="svc-name">Custom Style</div>
+        <p class="svc-desc">Bring a reference photo, a description, or just a vibe — our barbers will work closely with you to understand and execute exactly the style you have in mind. We specialize in making ideas a reality.</p>
+        <div class="svc-foot"><span class="svc-tag">Bespoke</span><span class="svc-arrow">↗</span></div>
       </div>
-    </div>
-  </div>
-</section>
-
-<!-- TEAM -->
-<div class="team">
-  <div class="team-inner">
-    <div class="team-header reveal">
-      <p class="s-label">The People Behind the Cuts</p>
-      <h2 class="s-title">Meet the <em>Team</em></h2>
-    </div>
-    <div class="team-grid">
-      <div class="barber-card reveal" style="transition-delay:.05s">
-        <div class="barber-avatar">✂</div>
-        <div class="barber-card-name">Ivan</div>
-        <div class="barber-card-role">Master Barber</div>
-        <p class="barber-card-bio">Known for his precision fades and incredible patience with kids. Ivan has been a beloved fixture at Primo's and has built a loyal following of clients who swear by his work.</p>
-        <div class="barber-specialty">
-          <span class="spec-tag">Fades</span>
-          <span class="spec-tag">Kids' Cuts</span>
-          <span class="spec-tag">Classic Cuts</span>
-        </div>
-      </div>
-      <div class="barber-card reveal" style="transition-delay:.1s">
-        <div class="barber-avatar">✂</div>
-        <div class="barber-card-name">Israel</div>
-        <div class="barber-card-role">Senior Barber</div>
-        <p class="barber-card-bio">A versatile stylist with deep experience across all hair types and textures. Israel brings both technical skill and a calm, welcoming energy to every client in the chair.</p>
-        <div class="barber-specialty">
-          <span class="spec-tag">All Textures</span>
-          <span class="spec-tag">Beard Work</span>
-          <span class="spec-tag">Custom Styles</span>
-        </div>
-      </div>
-      <div class="barber-card reveal" style="transition-delay:.15s">
-        <div class="barber-avatar">✂</div>
-        <div class="barber-card-name">Jean Carlo</div>
-        <div class="barber-card-role">Senior Barber</div>
-        <p class="barber-card-bio">Clients from out of town specifically seek out Jean Carlo by name. His attention to detail and ability to nail any style — from classic tapers to contemporary cuts — is consistently praised in reviews.</p>
-        <div class="barber-specialty">
-          <span class="spec-tag">Tapers</span>
-          <span class="spec-tag">Scissor Cuts</span>
-          <span class="spec-tag">Modern Styles</span>
-        </div>
+      <div class="svc reveal" style="transition-delay:.24s">
+        <div class="svc-num">06 — Scissor</div>
+        <div class="svc-name">Scissor Cut</div>
+        <p class="svc-desc">Soft, textured finishes using shears for clients who prefer a more natural look with carefully controlled shape and flow. Perfect for longer lengths or anyone who wants a cleaner, softer finish without heavy clipper use.</p>
+        <div class="svc-foot"><span class="svc-tag">Textured Finish</span><span class="svc-arrow">↗</span></div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- VALUES -->
-<div class="values">
-  <div class="values-inner">
+<!-- ADD-ONS -->
+<div class="addons" style="background:var(--ink2);">
+  <div class="addons-inner">
+    <div class="addons-header reveal">
+      <p class="s-label">More Options</p>
+      <h2 class="s-title">Additional <em>Services</em></h2>
+    </div>
+    <div class="addon-row reveal" style="transition-delay:.05s"><div class="addon-name">Line-Up / Edge-Up</div><div class="addon-desc">Sharp, clean edge definition along hairline, temples, and sideburns.</div><span class="addon-tag">Add-On</span></div>
+    <div class="addon-row reveal" style="transition-delay:.1s"><div class="addon-name">Shampoo + Style</div><div class="addon-desc">Wash, dry, and style for a full refresh before or after your cut.</div><span class="addon-tag">Add-On</span></div>
+    <div class="addon-row reveal" style="transition-delay:.15s"><div class="addon-name">Hot Towel Treatment</div><div class="addon-desc">A classic finish — warm towel applied for relaxation and a smooth shave.</div><span class="addon-tag">Add-On</span></div>
+    <div class="addon-row reveal" style="transition-delay:.2s"><div class="addon-name">Design / Detail Work</div><div class="addon-desc">Custom patterns, logos, or detailing carved into the fade for a unique finish.</div><span class="addon-tag">Custom</span></div>
+  </div>
+</div>
+
+<!-- AMENITIES -->
+<div class="amenities">
+  <div class="amenities-inner">
     <div class="reveal">
-      <p class="s-label">What We Stand For</p>
-      <h2 class="s-title">Our <em>Values</em></h2>
+      <p class="s-label">What's Included</p>
+      <h2 class="s-title">Shop <em>Amenities</em></h2>
     </div>
-    <div class="values-grid">
-      <div class="value-card reveal" style="transition-delay:.05s">
-        <div class="value-num">01</div>
-        <div class="value-title">Craft First</div>
-        <p class="value-desc">Every cut is taken seriously. We don't rush, we don't cut corners, and we don't settle for close enough. Your hair deserves the full attention of a skilled barber.</p>
-      </div>
-      <div class="value-card reveal" style="transition-delay:.1s">
-        <div class="value-num">02</div>
-        <div class="value-title">Everyone's Welcome</div>
-        <p class="value-desc">All genders, all races, all ages — this shop is for everyone. We've always operated that way. Inclusivity isn't a trend for us; it's just how we do business.</p>
-      </div>
-      <div class="value-card reveal" style="transition-delay:.15s">
-        <div class="value-num">03</div>
-        <div class="value-title">Community Roots</div>
-        <p class="value-desc">We're not a chain. We're a neighborhood shop that's been part of Norwalk for over 15 years. Our clients are our community, and we take that responsibility seriously.</p>
-      </div>
+    <div class="amenities-grid">
+      <div class="amen-cell reveal" style="transition-delay:.04s"><div class="amen-icon">🚪</div><div class="amen-title">Walk-Ins Welcome</div><p class="amen-desc">No appointment necessary. Come in any time during business hours.</p></div>
+      <div class="amen-cell reveal" style="transition-delay:.09s"><div class="amen-icon">💳</div><div class="amen-title">All Payments Accepted</div><p class="amen-desc">Credit cards, debit, and cash all accepted at the register.</p></div>
+      <div class="amen-cell reveal" style="transition-delay:.14s"><div class="amen-icon">📶</div><div class="amen-title">Free Wi-Fi</div><p class="amen-desc">Stay connected while you wait or during your cut.</p></div>
+      <div class="amen-cell reveal" style="transition-delay:.19s"><div class="amen-icon">♿</div><div class="amen-title">Wheelchair Accessible</div><p class="amen-desc">Our shop is fully accessible to all clients.</p></div>
+      <div class="amen-cell reveal" style="transition-delay:.24s"><div class="amen-icon">🅿</div><div class="amen-title">Free Parking</div><p class="amen-desc">Garage and street parking available right outside the shop.</p></div>
+      <div class="amen-cell reveal" style="transition-delay:.29s"><div class="amen-icon">✦</div><div class="amen-title">All Genders &amp; Races</div><p class="amen-desc">Everyone is welcome. This shop has always been for the whole community.</p></div>
+      <div class="amen-cell reveal" style="transition-delay:.34s"><div class="amen-icon">🎵</div><div class="amen-title">Great Atmosphere</div><p class="amen-desc">Good music, friendly energy, and a shop that feels like home.</p></div>
+      <div class="amen-cell reveal" style="transition-delay:.39s"><div class="amen-icon">📍</div><div class="amen-title">Downtown Norwalk</div><p class="amen-desc">Easy to find at 34 Wall St — central to Norwalk and close to everything.</p></div>
     </div>
+  </div>
+</div>
+
+<!-- BOOKING BANNER -->
+<div class="book-footer">
+  <h2>Walk in or <em>call ahead.</em></h2>
+  <div class="book-actions">
+    <a class="btn-dark" href="tel:2033544442">Call (203) 354-4442</a>
+    <a class="btn-outline-dark" href="hours.html">View Hours</a>
   </div>
 </div>
 
